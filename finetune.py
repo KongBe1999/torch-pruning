@@ -251,7 +251,7 @@ class PrunningFineTuner_VGG16:
         self.train(optimizer, epoches=10)
         torch.save(model.state_dict(), "final1-model-prunned")
 
-    def cal_flog(self):
+    def cal_flop(self):
         device = torch.device("cuda:0")
         width = 224
         height = 224
@@ -265,14 +265,18 @@ class PrunningFineTuner_VGG16:
         from ptflops import get_model_complexity_info
 
         flops, params = get_model_complexity_info(fd.to(device), (3, width, height), print_per_layer_stat=True, as_strings=True)
-        print("FLOPS:", flops)
-        print("PARAMS:", params)
+        string = []
+        # string.append(fd)
+        string.append(f"FLOPs: {flops}\n")
+        string.append(f"parameters: {params}\n")
 
-        print(f"With mode : prune")
         for i in range(5):
             time_time = time.time()
             features = fd(x)
-            print("inference time :{} s".format(time.time() - time_time))
+            string.append("inference time: {} s \n".format(time.time() - time_time))
+        
+        fopen = open("result_prune", "w+")
+        fopen.writelines(string)
 
 def get_args():
     parser = argparse.ArgumentParser()
