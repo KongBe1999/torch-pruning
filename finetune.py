@@ -282,7 +282,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--train", dest="train", action="store_true")
     parser.add_argument("--prune", dest="prune", action="store_true")
-    parser.add_argument("--cal-flop", dest="cal_flog", action="store_true")
+    parser.add_argument("--cal-flop", dest="cal_flop", action="store_true")
     parser.add_argument("--train_path", type = str, default = "/DATA/kong/dog_cat/train")
     parser.add_argument("--test_path", type = str, default = "/DATA/kong/dog_cat/test")
     parser.add_argument('--use-cuda', action='store_true', default=True, help='Use NVIDIA GPU acceleration')  
@@ -315,5 +315,5 @@ if __name__ == '__main__':
 
     elif args.prune:
         fine_tuner.prune()
-        if args.cal_flog:
-            fine_tuner.cal_flog()
+        if args.cal_flop:
+            fine_tuner.cal_flop()
